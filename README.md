@@ -1,8 +1,21 @@
-# HP LaserJet Pro P1102 Native Driver & Firmware Uploader for macOS (Apple Silicon ARM64)
+# HP LaserJet Pro P1102/P1102w Native Driver & Firmware Uploader for macOS (Apple Silicon ARM64)
 
-This repository contains the files and instructions for a **100% native, sandbox-friendly, zero-server** print driver and firmware uploader for the **HP LaserJet Pro P1102** running on macOS Apple Silicon (ARM64). 
+This repository contains the files and instructions for a **100% native, sandbox-friendly, zero-server** print driver and firmware uploader for the **HP LaserJet Pro P1102 and P1102w** running on macOS Apple Silicon (ARM64).
 
 It completely bypasses the macOS CUPS sandbox restrictions and kernel-level USB interface locking without needing custom loopback network daemons, external Ghostscript runtimes, or disabling System Integrity Protection (SIP).
+
+## Supported USB product IDs
+
+The hotplug uploader registers both product IDs used by the P1102 family:
+
+- P1102: `03f0:002a`
+- P1102w: `03f0:102a`
+
+The P1102w has a different USB product ID despite using the same volatile firmware and print protocol.
+
+## P1102w wireless configuration
+
+The P1102w stores its wireless profile separately from the volatile engine firmware uploaded by this project. Resetting or reconfiguring wireless settings does not replace the engine firmware. The legacy HP configuration utility accesses the printer's embedded web server over USB, but this repository intentionally does not bundle that proprietary utility.
 
 ---
 

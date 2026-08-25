@@ -2,9 +2,9 @@ import Foundation
 import IOKit
 import IOKit.usb
 
-// Configuration Constants
+// USB IDs for the P1102 family. The wireless P1102w reports a distinct product ID.
 let PRINTER_VID = 0x03F0
-let PRINTER_PID = 0x002A
+let PRINTER_PRODUCT_IDS = [0x002A, 0x102A]
 let FIRMWARE_PATH = "/Library/Printers/foo2zjs-str4ngemd/firmware/sihpP1102.dl"
 
 func log(_ message: String) {
@@ -220,28 +220,29 @@ func main() {
     let runLoopSource = IONotificationPortGetRunLoopSource(notifyPort).takeUnretainedValue()
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, CFRunLoopMode.defaultMode)
     
-    // Setup matching dictionary
-    let matchingDict = IOServiceMatching(kIOUSBDeviceClassName) as NSMutableDictionary
-    matchingDict[kUSBVendorID] = PRINTER_VID
-    matchingDict[kUSBProductID] = PRINTER_PID
-    
-    var iterator: io_iterator_t = 0
-    let kr = IOServiceAddMatchingNotification(
-        notifyPort,
-        kIOMatchedNotification,
-        matchingDict,
-        deviceAddedCallback,
-        nil,
-        &iterator
-    )
-    
-    if kr != KERN_SUCCESS {
-        log("Fatal Error: Failed to register IOKit service notifications (error \(kr)).")
-        exit(1)
+    for printerProductID in PRINTER_PRODUCT_IDS {
+        let matchingDict = IOServiceMatching(kIOUSBDeviceClassName) as NSMutableDictionary
+        matchingDict[kUSBVendorID] = PRINTER_VID
+        matchingDict[kUSBProductID] = printerProductID
+
+        var iterator: io_iterator_t = 0
+        let kr = IOServiceAddMatchingNotification(
+            notifyPort,
+            kIOMatchedNotification,
+            matchingDict,
+            deviceAddedCallback,
+            nil,
+            &iterator
+        )
+
+        if kr != KERN_SUCCESS {
+            log("Fatal Error: Failed to register USB product ID \(String(format: "0x%04X", printerProductID)) (error \(kr)).")
+            exit(1)
+        }
+
+        // Process printers already connected before the daemon was started.
+        deviceAddedCallback(refCon: nil, iterator: iterator)
     }
-    
-    // Process any printer already connected before the daemon was started
-    deviceAddedCallback(refCon: nil, iterator: iterator)
     
     // Run loop to keep processing notifications asynchronously
     log("Uploader daemon is active. Listening for printer USB hotplug events...")
