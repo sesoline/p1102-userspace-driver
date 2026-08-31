@@ -4,6 +4,23 @@
 
 ---
 
+## ⚡️ Instalador fácil (para quien no usa terminal)
+
+En la página de [Releases](https://github.com/sesoline/p1102-userspace-driver/releases) hay un **.pkg** (o .dmg) que se instala con doble clic, sin terminal. Compatible con Apple Silicon y Mac Intel (binarios universales).
+
+1. Descarga `p1102-userspace-driver-1.0.0.pkg` y haz doble clic (te pedirá la contraseña de administrador)
+2. Conecta la impresora por USB y enciéndela
+3. Espera ~15 segundos: el agente carga el firmware y la impresora se reinicia sola
+4. Imprime desde cualquier app eligiendo la cola con driver "HP LaserJet Pro P1102 Native (str4ngemd)"
+
+Si macOS bloquea el paquete (no está firmado): **clic derecho → Abrir**, o **Ajustes del Sistema → Privacidad y seguridad → Abrir de todos modos**.
+
+Para desinstalar: `sudo bash /Library/Printers/foo2zjs-str4ngemd/uninstall-p1102-driver.sh`
+
+Para reconstruir el instalador desde el código fuente: `./packaging/build-pkg.sh [VERSION]`
+
+---
+
 ## Contenido de esta carpeta
 
 | Archivo | Descripción |
