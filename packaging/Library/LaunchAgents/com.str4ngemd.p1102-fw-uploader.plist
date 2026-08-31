@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.str4ngemd.p1102-fw-uploader</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Library/Printers/foo2zjs-str4ngemd/bin/p1102_fw_uploader</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>~/Library/Logs/com.str4ngemd.p1102-fw-uploader.log</string>
+	<key>StandardErrorPath</key>
+	<string>~/Library/Logs/com.str4ngemd.p1102-fw-uploader.err</string>
+</dict>
+</plist>

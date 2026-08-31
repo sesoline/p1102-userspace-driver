@@ -1,0 +1,25 @@
+Welcome to the HP LaserJet Pro P1102 / P1102w driver installer.
+
+This installs a native, open-source print driver (foo2zjs, adapted for
+macOS) plus a background helper that uploads the required engine
+firmware to the printer every time it is connected over USB.
+
+How to print after installing:
+
+  1. Connect the printer to your Mac with a USB cable and turn it on.
+  2. Wait about 15 seconds. A background helper uploads the printer
+     firmware and the printer restarts itself (you will hear it).
+  3. macOS detects the printer and creates a queue automatically,
+     using this driver.
+  4. Print from any app, choosing the queue whose driver is
+     "HP LaserJet Pro P1102 Native (str4ngemd)".
+
+Notes:
+  - Works with both Apple Silicon (M1/M2/M3/M4) and Intel Macs.
+  - If macOS shows "unidentified developer", open System Settings >
+    Privacy & Security and click "Open Anyway".
+  - To remove the driver: sudo bash
+    /Library/Printers/foo2zjs-str4ngemd/uninstall-p1102-driver.sh
+
+Project page: https://github.com/sesoline/p1102-userspace-driver
+Based on: https://github.com/str4ngeMD/p1102-userspace-driver

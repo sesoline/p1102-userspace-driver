@@ -1,0 +1,18 @@
+#!/bin/bash
+# postinstall for the P1102 driver pkg (runs as root)
+set -e
+
+# Restart CUPS so it picks up the new PPD and filter
+/usr/bin/launchctl kickstart -k system/org.cups.cupsd >/dev/null 2>&1 || true
+
+# Load the per-user launchd agent for the currently logged-in user
+CONSOLE_USER=$(/usr/bin/stat -f "%Su" /dev/console)
+if [ -n "$CONSOLE_USER" ] && [ "$CONSOLE_USER" != "root" ]; then
+    USER_UID=$(/usr/bin/id -u "$CONSOLE_USER" 2>/dev/null || true)
+    if [ -n "$USER_UID" ]; then
+        /bin/launchctl asuser "$USER_UID" /bin/launchctl unload /Library/LaunchAgents/com.str4ngemd.p1102-fw-uploader.plist >/dev/null 2>&1 || true
+        /bin/launchctl asuser "$USER_UID" /bin/launchctl load /Library/LaunchAgents/com.str4ngemd.p1102-fw-uploader.plist >/dev/null 2>&1 || true
+    fi
+fi
+
+exit 0

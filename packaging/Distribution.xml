@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="1">
+    <title>HP LaserJet P1102/P1102w Driver (foo2zjs for macOS)</title>
+    <organization>community fork of str4ngeMD/p1102-userspace-driver</organization>
+    <domains enable_localSystem="true"/>
+    <options customize="never" require-scripts="false" hostArchitectures="arm64,x86_64"/>
+    <welcome file="welcome.txt"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.sesoline.p1102-userspace-driver"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="com.sesoline.p1102-userspace-driver" visible="false">
+        <pkg-ref id="com.sesoline.p1102-userspace-driver"/>
+    </choice>
+    <pkg-ref id="com.sesoline.p1102-userspace-driver" version="@VERSION@" onConclusion="none">p1102-userspace-driver-@VERSION@.pkg</pkg-ref>
+</installer-gui-script>
