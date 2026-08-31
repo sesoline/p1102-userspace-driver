@@ -53,6 +53,9 @@ cp "$REPO_DIR/packaging/Library/LaunchAgents/com.str4ngemd.p1102-fw-uploader.pli
 cp "$REPO_DIR/packaging/Library/Printers/foo2zjs-str4ngemd/uninstall-p1102-driver.sh" \
     "$PAYLOAD/Library/Printers/foo2zjs-str4ngemd/"
 
+echo "==> Stripping extended attributes (avoid AppleDouble files in payload)..."
+xattr -cr "$PAYLOAD" 2>/dev/null || true
+
 chmod 0555 "$PAYLOAD/Library/Printers/foo2zjs-str4ngemd/filter/rastertozjs"
 chmod 0755 "$PAYLOAD/Library/Printers/foo2zjs-str4ngemd/bin/p1102_fw_uploader"
 chmod 0755 "$PAYLOAD/Library/Printers/foo2zjs-str4ngemd/uninstall-p1102-driver.sh"
@@ -63,7 +66,7 @@ pkgbuild --root "$PAYLOAD" \
     --version "$VERSION" \
     --ownership recommended \
     --scripts "$REPO_DIR/packaging/scripts" \
-    "$WORK_DIR/component.pkg"
+    "$WORK_DIR/p1102-userspace-driver-$VERSION.pkg"
 
 echo "==> Building product archive..."
 sed "s/@VERSION@/$VERSION/g" "$REPO_DIR/packaging/Distribution.xml" > "$WORK_DIR/Distribution.xml"
