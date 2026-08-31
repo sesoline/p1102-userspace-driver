@@ -1,5 +1,11 @@
 # HP LaserJet Pro P1102/P1102w Native Driver & Firmware Uploader for macOS (Apple Silicon ARM64)
 
+> **Maintained fork.** This is a community-maintained fork of [str4ngeMD/p1102-userspace-driver](https://github.com/str4ngeMD/p1102-userspace-driver) — all credit for the driver design and implementation goes to its original author, who has stepped away from maintenance. This fork integrates community fixes:
+>
+> - P1102w USB product ID support (`03f0:102a`) by [@FrederikRogalski](https://github.com/FrederikRogalski)
+> - Fixed `foo2zjs_cups.patch` (the original was malformed and did not apply against upstream `OpenPrinting/foo2zjs`)
+> - Spanish installation guide ([README_ES.md](README_ES.md))
+
 This repository contains the files and instructions for a **100% native, sandbox-friendly, zero-server** print driver and firmware uploader for the **HP LaserJet Pro P1102 and P1102w** running on macOS Apple Silicon (ARM64).
 
 It completely bypasses the macOS CUPS sandbox restrictions and kernel-level USB interface locking without needing custom loopback network daemons, external Ghostscript runtimes, or disabling System Integrity Protection (SIP).
